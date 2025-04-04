@@ -39,15 +39,17 @@ func main() {
 	}
 
 	inputPath := args[0]
+	inputPathParts := strings.Split(inputPath, ".")
 	outputPath := args[1]
+	outputPathParts := strings.Split(outputPath, ".")
 
-	if strings.Split(inputPath, ".")[2] != "png" {
+	if len(inputPathParts) == 3 && inputPathParts[2] != "png" || len(inputPathParts) == 2 && inputPathParts[1] != "png" {
 		fmt.Println("Error: First argument must be a '.png' file")
 		os.Exit(1)
 	}
-	if strings.Split(outputPath, ".")[2] != "ico" {
-		fmt.Println("Error: Second argument must be named with a '.ico' extension")
-		os.Exit(1)
+
+	if len(outputPathParts) == 3 && outputPathParts[2] != "ico" || len(outputPathParts) == 2 && outputPathParts[1] != "ico" {
+		outputPath = outputPath + ".ico"
 	}
 
 	// Read the PNG file
